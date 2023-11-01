@@ -23,3 +23,44 @@
     </dependency>
 </dependencies>
 
+package teste;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Hotel {
+    private List<Quarto> quartos;
+    private List<Reserva> reservas;
+
+    public Hotel() {
+        this.quartos = new ArrayList<>();
+        this.reservas = new ArrayList<>();
+    }
+
+    public void adicionarQuarto(Quarto quarto) {
+        quartos.add(quarto);
+    }
+
+    public Reserva fazerReserva(Hospede hospede, int numeroQuarto, LocalDate checkIn, LocalDate checkOut) {
+        Quarto quarto = buscarQuarto(numeroQuarto);
+        if (quarto != null && quarto.isDisponivel()) {
+            Reserva reserva = new Reserva(hospede, quarto, checkIn, checkOut);
+            reservas.add(reserva);
+            return reserva;
+        }
+        return null; // Retornar null se o quarto não estiver disponível ou não existir
+    }
+
+    private Quarto buscarQuarto(int numeroQuarto) {
+        for (Quarto quarto : quartos) {
+            if (quarto.getNumero() == numeroQuarto) {
+                return quarto;
+            }
+        }
+        return null;
+    }
+
+    // Outros métodos conforme necessário
+}
+
